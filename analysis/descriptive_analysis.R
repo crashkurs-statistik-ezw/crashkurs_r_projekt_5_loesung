@@ -1,40 +1,31 @@
 # 1.0 Daten explorieren  ------------------------------------------------
 
 # 1.0.0
-# * Wie viele Maenner und Frauen sind im Datensatz?
-student_data_cleaned %>%
-  count(sex)
+# Zeige dir die deskriptive Statistik mit Hilfe von skimr an
+# * Installiere und lade das Paket skimr
+# * Führe die Funktion skim auf den Datensatz erasmus_data_cleaned aus
+install.packages(skimr)
+library(skimr)
+skim(erasmus_data_cleaned)
 
 # 1.0.1
-# * Bestimme die Spannweite und den Mittelwert des Alters aller SuS
-range(student_data_cleaned$age)
-mean(student_data_cleaned$age, na.rm = TRUE)
+# Beantworte mit Hilfe der skimr-Statistik folgende Fragen:
+# * Wie viele unterschiedliche Nationalitäten gab es unter den Teilnehmenden?
+# * Was war das Durchschnittsalter der Teilnehmenden?
 
 # 1.0.2
-# * Wie viele SuS leben in Familien mit mehr als drei und wieviele mit
-#   weniger oder gleich drei Familienmitgliedern?
-student_data_cleaned %>%
-  count(famsize)
-
-# 1.0.3
-# * Vergleiche, inwieweit sich die SuS in der Qualitaet ihrer familiaeren 
-#   Bindungen unterscheiden, wenn ihre Eltern zusammen oder getrennt leben.  
-# * Berechne den Mittelwert für beide Gruppen der Variable pstatus mit 
-#   den Funktionen group_by und fasse sie zusammen.
-student_data_cleaned %>%
-  group_by(pstatus) %>%
-  summarise(
-    mean_famrel = mean(famrel)
-  )
+# Vergleiche die Geschlechterverteilung der Teilnehmenden zwischen allen
+# akademischen Jahren
+erasmus_data_cleaned %>%
+  count(academic_year, participant_gender)
 
 # 1.0.4
-# * Untersuche, wie sich SuS aus kleinen und groeßeren Familien in 
-#   ihrer durchschnittlichen Mathenote unterscheiden. 
-# * Haben SuS aus kleinen Familien bessere Noten?
-student_data_cleaned %>%
-  group_by(famsize) %>%
+# * Untersuche, ob sich das durchschnittliche Alter der Teilnehmenden von Jahr
+#   zu Jahr veraendert hat. Nutze dafür group_by und summarise
+erasmus_data_cleaned %>%
+  group_by(academic_year) %>%
   summarise(
-    mean_grade_math = mean(mean_grade_math)
+    mean_age = mean(participant_age)
   )
 
 
