@@ -21,8 +21,17 @@ erasmus_data <- read_csv2("data/erasmus_data.csv")
 #   prägung "DE" erhalten bleibt
 # * Speichere den bereinigten Datensatz in der Variable erasmus_data_cleaned
 erasmus_data_cleaned <- erasmus_data %>% 
-  filter(sending_country_code == "DE")
+  dplyr::filter(sending_country_code == "DE")
 
+# 1.2.0
+# * Die Variable participant_age enthält einige fehlerhaft Werte.Schaue dir die
+#   Variablenauspraegungen mit der Funktion count genauer an und speichere den
+#   Output als erasmus_age.
+# * Lösche die Proband*innen aus erasmus_data_cleaned, die bei participant_age
+#   negative Werte, Werte unter 10 und ueber 100 haben.
+# * Speichere den Datensatz erneut als erasmus_data_cleaned
+erasmus_data_cleaned <- erasmus_data_cleaned %>% 
+  dplyr::filter(participant_age > 9, participant_age < 100)
 
 # 1.2 Datenexport ---------------------------------------------------------
 

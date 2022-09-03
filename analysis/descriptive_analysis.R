@@ -20,8 +20,8 @@ erasmus_data_cleaned %>%
   count(academic_year, participant_gender)
 
 # 1.0.4
-# * Untersuche, ob sich das durchschnittliche Alter der Teilnehmenden von Jahr
-#   zu Jahr veraendert hat. Nutze dafür group_by und summarise
+# Untersuche, ob sich das durchschnittliche Alter der Teilnehmenden von Jahr
+# zu Jahr veraendert hat. Nutze dafür group_by und summarise
 erasmus_data_cleaned %>%
   group_by(academic_year) %>%
   summarise(
@@ -32,58 +32,44 @@ erasmus_data_cleaned %>%
 # 1.1 Daten visualisieren -----------------------------------------------------
 
 # 1.1.0
-# Untersuche den Datensatz mit Hilfe eines Balkendiagramms
-# * Erstelle ein aneinandergereihtes Balkendiagramm, das die Verteilung der 
-#   SuS auf die verschiedenen Level von familiaerer Bindungsqualitaet d
-#   auf der X-Achse darstellt und das Geschlecht durch die Farbe der 
-#   Balken kennzeichnet
-# * Nutze position = position_dodge(), um die Balken nebeneinander zu reihen.
-# * Füge sinnvolle Achsen- und Legendentitel hinzu
-# * Haben die Schueler bessere familiaere Bindungen als Schuelerinnen?
-ggplot(student_data_cleaned, aes(x = famrel, fill = sex)) +
-  geom_bar(position = position_dodge()) +
-  labs(
-    x     = "Qualität der familiären Bindung",
-    y     = "Anzahl",
-    fill  = "Geschlecht"
-  ) +
-  scale_y_continuous(expand = expansion(0)) +
-  scale_fill_viridis_d(option = "cividis", begin = 0.3, end = 0.9)
+# * Untersuche die Altersverteilung genauer mit einem Histogramm.
+# * Aendere die Farbe der Balken zu blau und die Farbe der Umrandungslinien zu
+#   schwarz
+# * Vergleiche die Altersverteilung von Jahr zu Jahr mit facet_wrap
+ggplot(erasmus_data_cleaned, aes(x = participant_age)) +
+  geom_histogram(fill = "blue", color = "black") + 
+  facet_wrap(~academic_year)
 
 
 # 1.1.1
 # Speichere die Visualisierung im R-Projekt ab unter dem Pfad
-# images/barbplot_mothers_education_status.png
-ggsave("images/verteilung_bildungsqualitaet_geschlecht.png",
+# images/histogram_verteilung_alter_jahr.png
+ggsave("images/histogram_verteilung_alter_jahr.png",
        width = 8, height = 5, dpi = 300)
 
 
 # 1.1.2
-# * Erstelle ein aneinandergereihtes Balkendiagramm mit dem Bildungslevel der 
-#   Muetter auf der x-Achse und deren Beschaeftigungsstatus auf der Y-Achse.
-# * Erstelle  eine neue bedingte Variable mit Hilfe von case_when.
-# * Unterscheiden sich die arbeitenden Muetter von den nicht arbeitenden 
-#   Muettern in ihrem Bildungslevel?
-student_data_cleaned %>%
-  mutate(
-    working_mother = case_when(
-      mjob %in% c("at_home") ~ "no",
-      TRUE ~ "yes"
-    )
-  ) %>%  
-  ggplot(aes(x = medu, fill = working_mother)) +
-  geom_bar(position = "dodge") +
+# * Um Ausreißer in der Länge der Mobilitaetsphasen zu erkennen, koennen dir
+#   Boxplots helfen.
+# * Erstelle ein Boxplot pro Jahr mit der Variable mobility_duration auf der
+#   y-Achse
+# * Mithilfe von geom_jitter kannst du dir die einzelnen Werte der Laenge der
+#   Mobilitaetsphase ansehen. Beachte: Bei so vielen Werten wird das schnell
+#   unuebersichtlich, nutze alpha, um die Punkte transparent zu machen
+# * Gib der Visualisierung einen sinnvollen Titel und Achsentitel
+erasmus_data_cleaned %>%
+  ggplot(aes(x = academic_year, y = mobility_duration)) +
+  geom_boxplot() +
+  geom_jitter(alpha = .8)
   labs(
-    x     = "Bildungslevel der Mutter",
-    y     = "Anzahl",
-    fill  = "Working mother"
-  ) +
-  scale_y_continuous(expand = expansion(0)) +
-  scale_fill_viridis_d(option = "cividis", begin = 0.3, end = 0.9)
+    title = "Durchschnittliche Mobilitätsdauer",
+    x = "Akademisches Jahr",
+    y = "Kalendertage"
+  )
 
 
 # 1.1.3
 # Speichere die Visualisierung im R-Projekt ab unter dem Pfad
-# images/barbplot_mothers_education_status.png
-ggsave("images/barbplot_mothers_education_status.png", width = 8,
+# images/boxplots_mobility_duration_year.png
+ggsave("images/boxplots_mobility_duration_year.png", width = 8,
        height = 5, dpi = 300)
