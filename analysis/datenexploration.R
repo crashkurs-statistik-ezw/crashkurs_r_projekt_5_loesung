@@ -1,6 +1,14 @@
-# 1.0 Daten explorieren  ------------------------------------------------
+# 5.5 Setup ---------------------------------------------------------------
 
-# 1.0.0
+# 5.5.1 Daten einlesen
+# Imnportiere die CSV-Datei data/export/erasmus_data_cleaned.csv
+# und speichere sie in der Variable erasmus_data
+erasmus_data <- read_csv("data/export/erasmus_data_cleaned.csv")
+
+
+# 5.6 Daten explorieren  ------------------------------------------------
+
+# 5.6.1 Deskriptive Statistik erstellen
 # Zeige dir die deskriptive Statistik mit Hilfe von skimr an
 # * Installiere und lade das Paket skimr
 # * Führe die Funktion skim auf den Datensatz erasmus_data_cleaned aus
@@ -8,18 +16,18 @@ install.packages(skimr)
 library(skimr)
 skim(erasmus_data_cleaned)
 
-# 1.0.1
+# 5.6.2 Output deuten
 # Beantworte mit Hilfe der skimr-Statistik folgende Fragen:
 # * Wie viele unterschiedliche Nationalitäten gab es unter den Teilnehmenden?
 # * Was war das Durchschnittsalter der Teilnehmenden?
 
-# 1.0.2
+# 5.6.3 Geschlechterverteilung ausgeben
 # Vergleiche die Geschlechterverteilung der Teilnehmenden zwischen allen
 # akademischen Jahren
 erasmus_data_cleaned %>%
   count(academic_year, participant_gender)
 
-# 1.0.4
+# 5.6.4 Altersentwicklung untersuchen
 # Untersuche, ob sich das durchschnittliche Alter der Teilnehmenden von Jahr
 # zu Jahr veraendert hat. Nutze dafür group_by und summarise
 erasmus_data_cleaned %>%
@@ -29,9 +37,9 @@ erasmus_data_cleaned %>%
   )
 
 
-# 1.1 Daten visualisieren -----------------------------------------------------
+# 5.7 Daten visualisieren -----------------------------------------------------
 
-# 1.1.0
+# 5.7.1 Histogramm der Altersverteilung erstellen
 # * Untersuche die Altersverteilung genauer mit einem Histogramm.
 # * Aendere die Farbe der Balken zu blau und die Farbe der Umrandungslinien zu
 #   schwarz
@@ -41,14 +49,14 @@ ggplot(erasmus_data_cleaned, aes(x = participant_age)) +
   facet_wrap(~academic_year)
 
 
-# 1.1.1
+# 5.7.2 Visualisierung speichern
 # Speichere die Visualisierung im R-Projekt ab unter dem Pfad
 # images/histogram_verteilung_alter_jahr.png
 ggsave("images/histogram_verteilung_alter_jahr.png",
        width = 8, height = 5, dpi = 300)
 
 
-# 1.1.2
+# 5.7.3 Boxplots der Mobilitätsphasen erstellen
 # * Um Ausreißer in der Länge der Mobilitaetsphasen zu erkennen, koennen dir
 #   Boxplots helfen.
 # * Erstelle ein Boxplot pro Jahr mit der Variable mobility_duration auf der
@@ -68,7 +76,7 @@ erasmus_data_cleaned %>%
   )
 
 
-# 1.1.3
+# 5.7.4 Visualisierung speichern
 # Speichere die Visualisierung im R-Projekt ab unter dem Pfad
 # images/boxplots_mobility_duration_year.png
 ggsave("images/boxplots_mobility_duration_year.png", width = 8,
