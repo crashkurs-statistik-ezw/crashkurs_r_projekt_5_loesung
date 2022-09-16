@@ -32,20 +32,25 @@ erasmus_data_cleaned <- erasmus_data %>%
 #   Output als erasmus_age.
 # * Lösche die Proband*innen aus erasmus_data_cleaned, die bei participant_age
 #   negative Werte, Werte unter 10 und ueber 100 haben.
+# * Ändere außerdem den Namen der Variable '...1' zu 'id' mit Hilfe von rename
+#   Hilfe dazu findest du hier: 
+#   https://www.geeksforgeeks.org/rename-columns-of-a-data-frame-in-r-programming-rename-function/
 # * Speichere den Datensatz erneut als erasmus_data_cleaned
 erasmus_data_cleaned <- erasmus_data_cleaned %>% 
-  dplyr::filter(participant_age > 9, participant_age < 100)
+  dplyr::filter(participant_age > 9, participant_age < 100) %>% 
+  rename(id = ...1)
+  
 
 # 5.4 Datenexport ---------------------------------------------------------
 
 # 5.4.1 CSV-Datei exportieren
 # * Exportiere den Datensatz in den Ordner data/cleaned
-# * Speichere die Daten unter data/export/student_data_cleaned.csv
-write_csv(erasmus_data_cleaned, "data/export/erasmus_data_cleaned.csv")
+# * Speichere die Daten unter data/cleaned/student_data_cleaned.csv
+write_csv(erasmus_data_cleaned, "data/cleaned/erasmus_data_cleaned.csv")
 
 
 # 5.4.2 SAV-Datei exportieren
 # * Um die Daten in SPSS zu nutzen, exportiere den gereinigten Datensatz mit der
 #   Funktion write_sav
 # * Speichere die Daten unter data/export/student_data_cleaned.sav
-write_sav(student_data_cleaned, "data/export/student_data_cleaned.sav")
+write_sav(erasmus_data_cleaned, "data/export/erasmus_data_cleaned.sav")

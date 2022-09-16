@@ -12,6 +12,8 @@ erasmus_data <- read_csv("data/export/erasmus_data_cleaned.csv")
 # Zeige dir die deskriptive Statistik mit Hilfe von skimr an
 # * Installiere und lade das Paket skimr
 # * Führe die Funktion skim auf den Datensatz erasmus_data_cleaned aus
+# * Mehr über skim findest du hier:
+#   https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html
 install.packages(skimr)
 library(skimr)
 skim(erasmus_data_cleaned)
@@ -43,6 +45,8 @@ erasmus_data_cleaned %>%
 # * Untersuche die Altersverteilung genauer mit einem Histogramm.
 # * Aendere die Farbe der Balken zu blau und die Farbe der Umrandungslinien zu
 #   schwarz
+#   Hilfe dazu findest du hier:
+#   http://www.sthda.com/english/wiki/ggplot2-histogram-plot-quick-start-guide-r-software-and-data-visualization
 # * Vergleiche die Altersverteilung von Jahr zu Jahr mit facet_wrap
 ggplot(erasmus_data_cleaned, aes(x = participant_age)) +
   geom_histogram(fill = "blue", color = "black") + 
