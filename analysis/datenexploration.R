@@ -1,7 +1,7 @@
 # 5.5 Setup ---------------------------------------------------------------
 
 # 5.5.1 Daten einlesen
-# Imnportiere die CSV-Datei data/export/erasmus_data_cleaned.csv
+# Imnportiere die CSV-Datei data/cleaned/erasmus_data_cleaned.csv
 # und speichere sie in der Variable erasmus_data
 erasmus_data <- read_csv("data/export/erasmus_data_cleaned.csv")
 
